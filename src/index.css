@@ -16,6 +16,12 @@ body {
   overflow-x: hidden;
 }
 
+@font-face {
+  font-family: 'Hagrid';
+  src: url('./assets/fonts/Hagrid-Regular-trial.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 
 

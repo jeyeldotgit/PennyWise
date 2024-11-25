@@ -12,10 +12,6 @@
   height: 100%; /* Ensure it takes the full height */
   margin: 0;
   padding: 0;
-  display: flex; /* Enable flexible alignment */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center horizontally */
-  justify-content: center; /* Center vertically */
 }
 
 .logo {

@@ -108,7 +108,7 @@ function RegisterCard() {
           </div>
           <button
             type="submit"
-            className="w-full mb-0 mt-2 py-3 bg-[#363062] text-[#f5e8c7] rounded-3xl hover:outline focus:ring-1"
+            className="w-full mb-0 mt-2 py-3 bg-[#363062] text-[#f5f4e6] font-inter font-bold rounded-3xl hover:outline focus:ring-1"
           >
             Sign up
           </button>

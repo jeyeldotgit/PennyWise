@@ -9,6 +9,7 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         sans: ['Inter', 'sans-serif'],
+        hagrid: ['Hagrid', 'sans-serif'],
       },
       screens: {
         sm: '640px',
