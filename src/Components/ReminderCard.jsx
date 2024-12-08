@@ -14,9 +14,9 @@ function ReminderCard() {
   }, []); // Empty dependency array ensures it runs only once after the initial render
 
   return (
-    <div className="bg-[#435585] text-white max-w-lg max-h-full px-4 pt-2 rounded-2xl shadow-lg">
+    <div className="bg-[#435585] text-white max-w-lg max-h-full px-4 pt-2 rounded-xl shadow-xl">
         <h2 className="text-2xl text-[#f5f4e6] font-hagrid font-semibold p-4">Reminder</h2>
-        <p className='pb-20 p-4'>{Quote || "Loading..."}</p>
+        <p className='pb-20 p-4 text-md font-semibold font-poppins text-[#f5f4e6]'>{Quote || "Loading.."}.</p>
         
     </div>
   )

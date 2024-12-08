@@ -54,13 +54,13 @@ function RegisterCard() {
         </div>
         <div className="max-w-full">
           <h2
-            className="text-4xl font-black text-center mb-4 font-poppins"
+            className="text-4xl font-black text-center mb-0 font-poppins"
             style={{ color: '#363062' }}
           >
             Sign up to continue
           </h2>
         </div>
-        <p className="text-center text-sm font-extrabold text-[#818fb4] mb-0 mt-0 font-poppins mx-20">
+        <p className="text-center text-sm font-extrabold text-[#818fb4] mb-0 mt-3 font-poppins mx-20">
           Track, plan, and reach your financial goals your way
         </p>
         <form

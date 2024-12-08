@@ -83,6 +83,9 @@ function Login() {
       <div className="absolute right-60 transform scale-150">
         <img src={logo5} className="" alt="PennyWise Logo" />
       </div>
+      <aside>
+        <h1 className='text-7xl p-16'>Hello World</h1>
+      </aside>
     </div>
   );
 }

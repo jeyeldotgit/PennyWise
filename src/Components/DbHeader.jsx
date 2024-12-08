@@ -1,5 +1,8 @@
 import React from 'react'
 import ReminderCard from './ReminderCard'
+import GPCard from './GPCard'
+
+
 
 function DbHeader() {
   return (
@@ -9,11 +12,19 @@ function DbHeader() {
             <h1 className='font-hagrid text-3xl font-black pb-4'>Track your budget now!</h1>
         </header>
 
-        <div className='p-14'>
+        <div className='p-14 flex'>
             <ReminderCard></ReminderCard>
 
-        </div>
+            {/* CALENDAR */}
+            
+            
 
+          <GPCard></GPCard>
+        </div>  
+
+        <div>
+          
+        </div>
     </div>
 
   )

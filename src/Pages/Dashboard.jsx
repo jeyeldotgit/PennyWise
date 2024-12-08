@@ -3,6 +3,7 @@ import Sidebar from '../Components/Sidebar'
 import DbHeader from '../Components/DbHeader'
 import RegisterCard from '../Components/RegisterCard'
 
+
 function Dashboard() {
   return (
     <div className='flex w-full h-screen'>
@@ -19,8 +20,9 @@ function Dashboard() {
         
         {/* Register Card */}
         <div>
-          <h1>Hello World</h1>
+          <h1>kupal</h1>
         </div>
+
 
         
 
