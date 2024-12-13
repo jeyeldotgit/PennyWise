@@ -3,6 +3,7 @@ import Sidebar from '../Components/Sidebar';
 import DbHeader from '../Components/DbHeader';
 import RegisterCard from '../Components/RegisterCard';
 import ReminderCard from '../Components/ReminderCard';
+import GoalsCard from '../Components/GoalsCard';
 
 function Dashboard() {
   return (
@@ -22,6 +23,11 @@ function Dashboard() {
         <div className='p-12'>
           <ReminderCard></ReminderCard>
         </div>
+
+        <div className='p-12'>
+          <GoalsCard></GoalsCard>
+        </div>
+        
 
 
 
