@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo5 from '../assets/images/logo5.png';
+import axios from 'axios';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -19,24 +20,47 @@ function Login() {
   };
 
   // Handle form submission
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+  
     // Basic validation
     if (!formData.username || !formData.password) {
       setErrorMessage('Both fields are required!');
       return;
     }
+  
+    setErrorMessage(''); // Clear error messages
+  
+    try {
+      // Send POST request to the Flask backend
+      const response = await axios.post(
+        'http://127.0.0.1:5555/login', // Flask API endpoint
+        formData, // Payload
+        { withCredentials: false } // No need for session cookies with JWT
+      );
+  
+      console.log('Login successful:', response.data);
 
-    setErrorMessage('');
+      // Assuming the response contains a JWT token
+      const token = response.data.token; // Adjust based on your response structure
 
-    // Simulate login process (you can replace this with an actual API call)
-    console.log('Logging in with:', formData);
-
-    // Example: Navigate to another page on successful login
-    // Replace the console log with real authentication logic
+      // Store the JWT token in localStorage or sessionStorage
+      localStorage.setItem('authToken', token); // Store it in localStorage
+  
+      // Navigate to the dashboard or another page upon successful login
+      alert('Login successful! Redirecting to dashboard...');
+      window.location.href = '/dashboard'; // Example: Redirect to dashboard
+    } catch (error) {
+      // Handle errors from the backend
+      if (error.response && error.response.data) {
+        const apiError = error.response.data.error || 'Login failed.';
+        setErrorMessage(apiError);
+      } else {
+        setErrorMessage('      Something went wrong. Please try again.');
+      }
+    }
   };
-
+  
   return (
     <div className="min-h-screen w-full flex items-center fixed-inset-0 bg-[#435585] pl-14">
       <div className="w-full max-w-sm bg-transparent pl-20 mb-12">
@@ -81,11 +105,9 @@ function Login() {
         </p>
       </div>
       <div className="absolute right-60 transform scale-150">
-        <img src={logo5} className="" alt="PennyWise Logo" />
+        <img src={logo5} className="w-[600px] mb-12" alt="PennyWise Logo" />
       </div>
-      <aside>
-        <h1 className='text-7xl p-16'>Hello World</h1>
-      </aside>
+ 
     </div>
   );
 }

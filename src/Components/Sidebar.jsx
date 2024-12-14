@@ -1,26 +1,33 @@
 import React from 'react';
 import logo_trans from './../assets/images/logo_trans.png';
 import { useNavigate } from 'react-router-dom';
+import { FiHome, FiTarget, FiClock, FiUser, FiLogOut } from 'react-icons/fi';
+import { LuWalletMinimal } from "react-icons/lu";
+import { LuLayoutDashboard } from "react-icons/lu";
 
-// Data for menus
+// Data for menus with icons
 const menus = [
-  { title: "Dashboard", path: "/dashboard" },
-  { title: "Budgeting", path: "/budgeting" },
-  { title: "Goals", path: "/goals" },
-  { title: "History", path: "/history" },
+  { title: "Dashboard", path: "/dashboard", icon: <LuLayoutDashboard /> },
+  { title: "Budgeting", path: "/budgeting", icon: <LuWalletMinimal /> },
+  { title: "Goals", path: "/goals", icon: <FiTarget /> },
+  { title: "History", path: "/history", icon: <FiClock /> },
 ];
 
 const secondaryMenus = [
-  { title: "Profile" },
-  { title: "Sign Out" },
+  { title: "Profile", icon: <FiUser /> },
+  { title: "Sign Out", icon: <FiLogOut /> },
 ];
 
 // Reusable Sidebar Menu Item Component
-const MenuItem = ({ title, path, onClick }) => (
+const MenuItem = ({ title, path, icon, onClick }) => (
   <li
-    className="p-6 hover:outline hover:outline-[#c5c4d3] hover:outline-2 hover:rounded-3xl cursor-pointer"
+    className="flex items-center gap-4 p-6 rounded-3xl cursor-pointer 
+      hover:bg-[#4e4b6b] hover:text-[#ffffff] hover:scale-105 transform transition duration-300"
     onClick={onClick}
   >
+    {/* Icon */}
+    <span className="text-xl">{icon}</span>
+    {/* Title */}
     <span>{title}</span>
   </li>
 );
@@ -35,6 +42,7 @@ const Sidebar = () => {
       <MenuItem
         key={index}
         title={menu.title}
+        icon={menu.icon}
         onClick={isNavigable ? () => navigate(menu.path) : undefined}
       />
     ));

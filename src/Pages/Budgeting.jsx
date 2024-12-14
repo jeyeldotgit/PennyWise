@@ -31,8 +31,8 @@ function Budgeting() {
           <DbHeader />
         </div>
 
-        <h1 className="text-center font-bold text-2xl">Income and Expense Tracking</h1>
-        <div className="flex flex-col space-y-4 p-4">
+        
+        <div className="flex flex-col space-y-4 p-4 mt-8">
           <div className="flex space-x-8">
             {/* Pass addTransaction to forms */}
             <IncomeForm addTransaction={addTransaction} />
@@ -41,9 +41,9 @@ function Budgeting() {
 
           <div className="flex space-x-8">
             <ExpenseForm addTransaction={addTransaction} />
-            <div className="p-12 flex flex-col space-y-4 space-x-8">
-              <Summary transactions={transactions} />
-            </div>
+            
+            <div className='ml-20'><Summary transactions={transactions} /></div> 
+            
           </div>
 
           <div className="mt-6 flex flex-col space-y-4"></div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import logo1 from './../assets/images/logo1.png';
+import axios from 'axios';
 
 function RegisterCard() {
   // State to manage form data
@@ -23,26 +24,40 @@ function RegisterCard() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form from submitting normally
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
     const newErrors = {}; // Object to store errors
-
-    // Simple validation
+  
+    // Validation
     if (!formData.username.trim()) newErrors.username = 'Username is required.';
     if (!formData.email.includes('@')) newErrors.email = 'Invalid email address.';
     if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters.';
-
-    setErrors(newErrors); // Set the validation errors
-
-    // If no errors, simulate successful registration
+  
+    setErrors(newErrors); // Set errors
+  
     if (Object.keys(newErrors).length === 0) {
-      console.log('Form submitted successfully:', formData);
-
-      // Simulate successful registration and redirect
-      setTimeout(() => {
+      try {
+        // Send POST request to the Flask backend
+        const response = await axios.post(
+          'http://127.0.0.1:5555/register', // Flask API endpoint
+          formData, // Payload
+          { withCredentials: true } // Include credentials (session cookies)
+        );
+  
+        console.log('Registration Successful:', response.data);
+  
+        // Show success message and redirect to login page
         alert('Registration successful! Redirecting to login...');
-        navigate('/Login'); // Redirect to the login page
-      }, 500);
+        navigate('/login');
+      } catch (error) {
+        // Handle errors returned by the Flask API
+        if (error.response && error.response.data) {
+          const apiError = error.response.data.error || 'Registration failed.';
+          alert(apiError);
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      }
     }
   };
 

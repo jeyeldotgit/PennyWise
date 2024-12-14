@@ -10,10 +10,20 @@ const Summary = ({ transactions }) => {
   const balance = totalIncome - totalExpenses;
 
   return (
-    <div className=" justify-between items-center bg-blue-100 p-4 rounded">
-      <div>Total Income: ₱ {totalIncome.toFixed(2)}</div>
-      <div>Total Expenses: ₱ {totalExpenses.toFixed(2)}</div>
-      <div>Remaining Balance: ₱ {balance.toFixed(2)}</div>
+    <div className='flex ml-[480px]'>
+      <div  className=" justify-between items-end p-4 text-xl bg-[#818fb4] rounded-2xl border border-black font-poppins text-[#f5f4e6] text-end">
+        <div>Total Income</div>
+        <div>Total Expenses</div>
+        <div className='pl-4'>Remaining Balance</div>
+      </div>
+
+      <div className='justify-between items-end p-4 text-xl bg-[#435585] rounded-2xl border border-black font-poppins text-[#f5f4e6] ml-4 '>
+        <div className='pr-16'>₱ {totalIncome.toFixed(2)}</div>
+        <div>₱ {totalExpenses.toFixed(2)}</div>
+        <div>₱ {balance.toFixed(2)}</div>
+      </div>
+
+        
     </div>
   );
 };
