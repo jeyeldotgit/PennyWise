@@ -1,23 +1,35 @@
-import React from 'react';
+import React from "react";
+import useUser from "../utils/useUser";  // Import the custom hook
 
-// Reusable Header Section Component
-const HeaderSection = ({ title, subtitle, className }) => (
-  <header className={`w-full p-6 pl-14 border-b-2 border-black pb-4 ${className}`}>
-    {subtitle && <h3 className="font-hagrid text-sm font-bold">{subtitle}</h3>}
-    {title && <h1 className="font-hagrid text-3xl font-black pb-4">{title}</h1>}
-  </header>
-);
-
-// Main Component
 const DbHeader = () => {
-  const username = "$username"; // Replace with dynamic user data when available
+  const { user, loading, error } = useUser();  // Use the custom hook to get user data
+
+  if (loading) {
+    return (
+      <div className="h-20vh w-screen bg-[#f5e8c7]">
+        <p>Loading user info...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-20vh w-screen bg-[#f5e8c7]">
+        <p>Error loading user info. Redirecting...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-20vh w-screen bg-[#f5e8c7]">
-      <HeaderSection
-        subtitle={`Welcome Back, ${username}`}
-        title="Track your budget now!"
-      />
+      <div className="w-full p-0 pl-14 border-b-2 border-black pb-4">
+        {user && (
+          <>
+            <h3 className="font-hagrid text-sm font-bold">Welcome Back, {user.username}</h3>
+            <h1 className="font-hagrid text-3xl font-black pb-4">Track your budget now!</h1>
+          </>
+        )}
+      </div>
     </div>
   );
 };

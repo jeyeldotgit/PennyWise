@@ -10,6 +10,8 @@ import Dashboard from './Pages/Dashboard'
 import Budgeting from './Pages/Budgeting'
 import Goals from './Pages/Goals'
 import History from './Pages/History'
+import LandingPage from './Pages/LandingPage'
+
 
 
 import "@fontsource/poppins";
@@ -18,6 +20,8 @@ import "@fontsource/inter";
 
 
 import { Routes, Route } from 'react-router'
+
+
 
 
 function App() {
@@ -33,7 +37,8 @@ function App() {
         <Route path='/budgeting' element={<><Budgeting></Budgeting></>} ></Route>
         <Route path='/goals' element={<><Goals></Goals></>} ></Route>
         <Route path='/history' element={<><History></History></>} ></Route>
-        
+        <Route path='/landing' element={<><LandingPage></LandingPage></>} ></Route>
+     
       </Routes>
      
     </>

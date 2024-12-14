@@ -2,7 +2,7 @@ import React from 'react';
 import { MdRemove } from "react-icons/md";
 
 const TransactionList = ({ transactions, deleteTransaction }) => {
-  // Group transactions by date
+  // Group transactions by date, including deleted transactions
   const groupedTransactions = transactions.reduce((acc, tx) => {
     if (!acc[tx.date]) {
       acc[tx.date] = [];
@@ -32,13 +32,17 @@ const TransactionList = ({ transactions, deleteTransaction }) => {
                       <strong className="mr-12">{tx.type === 'income' ? 'Income' : 'Expense'}:</strong> {tx.category} - {tx.currency} {tx.amount}
                     </p>
                   </div>
+                  {/* If the transaction is deleted, show it differently */}
+                  {tx.removed && <p className="text-red-500">This entry was removed</p>}
                   {/* Delete Button */}
-                  <button
-                    onClick={() => deleteTransaction(index)}
-                    className="bg-[#818fb4] text-white p-1 rounded"
-                  >
-                    <MdRemove />
-                  </button>
+                  {!tx.removed && (
+                    <button
+                      onClick={() => deleteTransaction(index)}
+                      className="bg-[#818fb4] text-white p-1 rounded"
+                    >
+                      <MdRemove />
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
