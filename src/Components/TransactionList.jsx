@@ -25,23 +25,19 @@ const TransactionList = ({ transactions, deleteTransaction }) => {
       <div className="w-[720px] h-[360px] ml-[180px] border border-[#1d1f25] rounded-2xl p-4 mt-6 font-poppins text-base bg-[#435585] text-[#f5f4e6]">
         {sortedDates.map((date) => (
           <div key={date}>
-            {/* Display the Date */}
             <h3 className="font-semibold text-sm mb-2">{date}</h3>
             <div className="grid grid-cols-2 gap-4">
-              {/* Loop through each transaction for the specific date */}
               {groupedTransactions[date]
                 .filter((tx) => !tx.removed) // Only render transactions that are not removed
-                .map((tx, index) => (
-                  <div key={index} className={`mb-2 flex justify-between items-center ${tx.type === 'expense' ? 'pl-4' : ''}`}>
+                .map((tx) => (
+                  <div key={tx.id} className={`mb-2 flex justify-between items-center ${tx.type === 'expense' ? 'pl-4' : ''}`}>
                     <div>
-                      {/* If the transaction is income, display it as Income, otherwise Expense */}
                       <p>
                         <strong className="mr-12">{tx.type === 'income' ? 'Income' : 'Expense'}:</strong> {tx.category} - {tx.currency} {tx.amount}
                       </p>
                     </div>
-                    {/* Delete Button */}
                     <button
-                      onClick={() => deleteTransaction(index)}
+                      onClick={() => deleteTransaction(tx.id)}
                       className="bg-[#818fb4] text-white p-1 rounded"
                     >
                       <MdRemove />

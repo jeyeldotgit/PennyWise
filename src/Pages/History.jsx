@@ -2,61 +2,79 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import DbHeader from '../Components/DbHeader';
 import useUser from '../utils/useUser'; // Assuming the hook is located here
-import DownloadHistory from '../Components/DownloadHistory';
+import HttpClient from '../utils/HttpClient'; // Import HttpClient
 
 function History() {
-  // Get user data from the useUser hook
   const { user, isLoading, error } = useUser();
 
   const [transactions, setTransactions] = useState([]); // Active transactions
   const [removedTransactions, setRemovedTransactions] = useState([]); // Removed transactions
 
   useEffect(() => {
-    // Check for any error in fetching user data
     if (error) {
       console.error("Error fetching user:", error);
     }
   }, [error]);
 
-  // Load transactions from sessionStorage
   useEffect(() => {
     const storedTransactions = sessionStorage.getItem("transactions");
     if (storedTransactions) {
       const data = JSON.parse(storedTransactions);
-      const activeTxs = data.filter(tx => !tx.removed);  // Filter active transactions
-      const removedTxs = data.filter(tx => tx.removed);  // Filter removed transactions
+      const activeTxs = data.filter(tx => !tx.removed);  
+      const removedTxs = data.filter(tx => tx.removed);  
       setTransactions(activeTxs);
       setRemovedTransactions(removedTxs);
     }
   }, []);
 
-  // Display loading state if user data is still being fetched
   if (isLoading) {
     return <div>Loading user data...</div>;
   }
 
-  // Display an error message if there was an issue fetching user data
   if (error) {
     return <div>Error: {error}</div>;
   }
 
+  const handleSendDataToServer = async () => {
+    // Combine active and removed transactions
+    const allTransactions = [...transactions, ...removedTransactions];
+  
+    const dataToSend = {
+      transactions: allTransactions,
+    };
+  
+    try {
+      // Send the transaction data to the backend
+      const response = await HttpClient.post('/generate-cobol-file', dataToSend, {
+        responseType: 'blob', 
+      });
+  
+      // Trigger download
+      const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', 'transaction_report.txt'); 
+      document.body.appendChild(link);
+      link.click();  
+    } catch (error) {
+      console.error('Error sending data to server:', error);
+    }
+  };
+
   return (
-    <div className='flex w-100vh h-screen bg-[#f5e8c7]'>
+    <div className="flex w-100vh h-screen bg-[#f5e8c7]">
       <div>
         <Sidebar />
       </div>
 
       <div className="flex flex-col flex-grow pt-6">
-        {/* Header */}
         <div>
           <DbHeader />
         </div>
 
-        {/* Transaction History */}
         <div className="p-6 mt-12 bg-white border border-gray-300 rounded-lg ml-[200px] mr-[1000px]">
           <h2 className="font-semibold text-xl mb-4">Transaction History</h2>
 
-          {/* Added Transactions */}
           <div className="mb-4">
             <h3 className="font-semibold text-lg">Added Transactions</h3>
             <div>
@@ -71,7 +89,6 @@ function History() {
             </div>
           </div>
 
-          {/* Deleted Transactions */}
           <div>
             <h3 className="font-semibold text-lg text-red-500">Deleted Transactions</h3>
             <div>
@@ -87,8 +104,12 @@ function History() {
           </div>
         </div>
 
-        <div>
-          <DownloadHistory />
+        <div className="p-6 mt-4">
+          <button 
+            onClick={handleSendDataToServer} 
+            className="bg-blue-500 text-white py-2 px-4 rounded">
+            Send Data to Server
+          </button>
         </div>
       </div>
     </div>

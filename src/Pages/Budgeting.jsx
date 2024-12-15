@@ -7,6 +7,7 @@ import TransactionList from "../Components/TransactionList";
 import Summary from "../Components/Summary";
 import useUser from "../utils/useUser";  // Import the custom hook for user data
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 function Budgeting() {
   const [transactions, setTransactions] = useState([]);
@@ -37,27 +38,27 @@ function Budgeting() {
 
   // Function to add a new transaction
   const addTransaction = (transaction) => {
-    setTransactions((prev) => [...prev, transaction]);
+    const newTransaction = { ...transaction, id: uuidv4() }; // Add a unique ID to the transaction
+    setTransactions((prev) => [...prev, newTransaction]);
   };
 
   // Function to delete a transaction by index
-  const deleteTransaction = (index) => {
+  const deleteTransaction = (id) => {
     setTransactions((prev) => {
-      // Update the transactions list to mark the transaction as removed
-      const updatedTransactions = prev.map((tx, i) => {
-        if (i === index) {
-          return { ...tx, removed: true }; // Mark as removed
+      const updatedTransactions = prev.map((tx) => {
+        if (tx.id === id) {
+          return { ...tx, removed: true }; // Mark as removed by setting removed to true
         }
         return tx;
       });
   
-      // Save the updated list (with removed transactions) to sessionStorage
+      // Save the updated transactions to sessionStorage
       sessionStorage.setItem("transactions", JSON.stringify(updatedTransactions));
   
-      // Return the updated list to update the state
-      return updatedTransactions;
+      return updatedTransactions; // Return updated state
     });
   };
+  
   // Loading state
   if (loading) {
     return (

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Reusable Card Component
 const Card = ({ title, children, className }) => (
-  <div className={`bg-[#435585] text-white max-w-lg max-h-full px-4 pt-2 rounded-xl shadow-xl mt-10 ml-10 ${className}`}>
+  <div className={`bg-[#435585] text-white w-[510px] max-h-full px-4 pt-2 rounded-xl shadow-xl mt-10 ml-10 ${className}`}>
     {title && (
       <h2 className="text-2xl text-[#f5f4e6] font-hagrid font-semibold p-4">
         {title}
