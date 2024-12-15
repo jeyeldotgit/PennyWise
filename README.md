@@ -25,3 +25,6 @@ Currently, two official plugins are available:
 - Reactjs
 - Tailwindcss
 - React Router
+- Flask
+- Python
+
