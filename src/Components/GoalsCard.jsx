@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 // Reusable Card Component
 const Card = ({ title, children, className }) => (
@@ -15,28 +14,32 @@ const Card = ({ title, children, className }) => (
 
 // Main GoalsCard Component
 const GoalsCard = () => {
-  const [goal, setGoal] = useState('');
-
+  const [goals, setGoals] = useState([]);
+  
+  // Load goals from sessionStorage on component mount
   useEffect(() => {
-    const fetchGoal = async () => {
-      try {
-        const { data } = await axios.get('https://type.fit/api/quotes');
-        const randomGoal = data[Math.floor(Math.random() * data.length)].text;
-        setGoal(randomGoal || "Keep striving towards your goals!");
-      } catch (error) {
-        console.error("Error fetching the goal:", error);
-        setGoal("Set a new goal and work towards it!");
-      }
-    };
-
-    fetchGoal();
+    const savedGoals = sessionStorage.getItem('goals');
+    if (savedGoals) {
+      setGoals(JSON.parse(savedGoals)); // Load the saved goals from sessionStorage
+    }
   }, []);
 
+  // Filter unfinished goals and get the first 3
+  const unfinishedGoals = goals.filter((goal) => !goal.done).slice(0, 2);
+
   return (
-    <Card title="Goals" >
-      <p className="pb-20 text-md font-semibold font-poppins text-[#f5f4e6]">
-        {goal || "Loading..."}
-      </p>
+    <Card title="Unfinished Goals">
+      <div className="space-y-4 max-h-64 overflow-y-auto">
+        {unfinishedGoals.length === 0 ? (
+          <p className="text-md font-semibold text-[#f5f4e6]">No unfinished goals yet!</p>
+        ) : (
+          unfinishedGoals.map((goal) => (
+            <div key={goal.id} className="flex justify-between items-center bg-[#5b7ab5] text-white p-4 rounded-lg shadow-md">
+              <p className="text-lg">{goal.text}</p>
+            </div>
+          ))
+        )}
+      </div>
     </Card>
   );
 };

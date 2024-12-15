@@ -29,7 +29,6 @@ const LandingPage = () => {
       {user ? (
         <div className="text-center">
           <h1 className="text-4xl font-semibold text-[#363062]">Welcome, {user.username}!</h1>
-          <p className="text-lg text-[#818fb4] mt-4">Your User ID: {user.id}</p>
           <p className="text-lg text-[#818fb4] mt-4">We're glad to have you here!</p>
           
           <button

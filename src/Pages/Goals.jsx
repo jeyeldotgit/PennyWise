@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import DbHeader from '../Components/DbHeader';
+import GoalsCard from '../Components/GoalsCard'; // Import the GoalsCard component
 import useUser from '../utils/useUser'; // Import the useUser hook
 
 function Goals() {
@@ -68,6 +69,9 @@ function Goals() {
     return <div>Error: {error}</div>;
   }
 
+  // Filter unfinished goals and take the first 3
+  const unfinishedGoals = goals.filter((goal) => !goal.done).slice(0, 3);
+
   return (
     <div className="flex w-full h-screen bg-[#f5e8c7]">
       <Sidebar />
@@ -131,6 +135,8 @@ function Goals() {
             ))}
           </div>
         </div>
+        
+       
       </div>
     </div>
   );
