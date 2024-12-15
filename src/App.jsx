@@ -11,6 +11,7 @@ import Budgeting from './Pages/Budgeting'
 import Goals from './Pages/Goals'
 import History from './Pages/History'
 import LandingPage from './Pages/LandingPage'
+import Profile from './Pages/Profile'
 
 
 
@@ -38,6 +39,7 @@ function App() {
         <Route path='/goals' element={<><Goals></Goals></>} ></Route>
         <Route path='/history' element={<><History></History></>} ></Route>
         <Route path='/landing' element={<><LandingPage></LandingPage></>} ></Route>
+        <Route path='/profile' element={<><Profile></Profile></>} ></Route>
      
       </Routes>
      

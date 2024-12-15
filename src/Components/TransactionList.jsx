@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MdRemove } from "react-icons/md";
 
 const TransactionList = ({ transactions, deleteTransaction }) => {
@@ -14,6 +14,11 @@ const TransactionList = ({ transactions, deleteTransaction }) => {
   // Sort the dates in descending order
   const sortedDates = Object.keys(groupedTransactions).sort((a, b) => new Date(b) - new Date(a));
 
+  // Save transactions to sessionStorage whenever transactions change
+  useEffect(() => {
+    sessionStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
+
   return (
     <div>
       <h1 className="font-bold font-hagrid text-[23px] border rounded-2xl bg-[#818fb4] border-black p-4 mb-4 ml-[180px] text-[#f5f4e6]">Income and Expense Tracking</h1>
@@ -24,27 +29,25 @@ const TransactionList = ({ transactions, deleteTransaction }) => {
             <h3 className="font-semibold text-sm mb-2">{date}</h3>
             <div className="grid grid-cols-2 gap-4">
               {/* Loop through each transaction for the specific date */}
-              {groupedTransactions[date].map((tx, index) => (
-                <div key={index} className={`mb-2 flex justify-between items-center ${tx.type === 'expense' ? 'pl-4' : ''}`}>
-                  <div>
-                    {/* If the transaction is income, display it as Income, otherwise Expense */}
-                    <p>
-                      <strong className="mr-12">{tx.type === 'income' ? 'Income' : 'Expense'}:</strong> {tx.category} - {tx.currency} {tx.amount}
-                    </p>
-                  </div>
-                  {/* If the transaction is deleted, show it differently */}
-                  {tx.removed && <p className="text-red-500">This entry was removed</p>}
-                  {/* Delete Button */}
-                  {!tx.removed && (
+              {groupedTransactions[date]
+                .filter((tx) => !tx.removed) // Only render transactions that are not removed
+                .map((tx, index) => (
+                  <div key={index} className={`mb-2 flex justify-between items-center ${tx.type === 'expense' ? 'pl-4' : ''}`}>
+                    <div>
+                      {/* If the transaction is income, display it as Income, otherwise Expense */}
+                      <p>
+                        <strong className="mr-12">{tx.type === 'income' ? 'Income' : 'Expense'}:</strong> {tx.category} - {tx.currency} {tx.amount}
+                      </p>
+                    </div>
+                    {/* Delete Button */}
                     <button
                       onClick={() => deleteTransaction(index)}
                       className="bg-[#818fb4] text-white p-1 rounded"
                     >
                       <MdRemove />
                     </button>
-                  )}
-                </div>
-              ))}
+                  </div>
+                ))}
             </div>
           </div>
         ))}
