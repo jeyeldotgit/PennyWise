@@ -15,7 +15,7 @@ export const TransactionProvider = ({ children }) => {
     }
   }, []);
 
-  // Add a transaction
+  // Update transactions
   const addTransaction = (transaction) => {
     setTransactions((prevTransactions) => {
       const newTransactions = [...prevTransactions, transaction];
@@ -24,21 +24,16 @@ export const TransactionProvider = ({ children }) => {
     });
   };
 
-  // Mark a transaction as removed instead of deleting
   const deleteTransaction = (id) => {
     setTransactions((prevTransactions) => {
-      const updatedTransactions = prevTransactions.map((tx) =>
-        tx.id === id ? { ...tx, removed: true } : tx
-      );
-      sessionStorage.setItem("transactions", JSON.stringify(updatedTransactions));
-      return updatedTransactions;
+      const filteredTransactions = prevTransactions.filter((tx) => tx.id !== id);
+      sessionStorage.setItem("transactions", JSON.stringify(filteredTransactions));
+      return filteredTransactions;
     });
   };
 
   return (
-    <TransactionContext.Provider
-      value={{ transactions, addTransaction, deleteTransaction }}
-    >
+    <TransactionContext.Provider value={{ transactions, addTransaction, deleteTransaction }}>
       {children}
     </TransactionContext.Provider>
   );

@@ -7,6 +7,20 @@ const UserProfileManager = ({ user }) => {
     about_me: ''
   });
 
+  // Generate a random profile picture URL
+  const getRandomAvatar = () => {
+    // Check if there's a saved avatar in sessionStorage
+    const savedAvatar = sessionStorage.getItem('avatar');
+    if (savedAvatar) {
+      return savedAvatar; // Return the saved avatar if it exists
+    } else {
+      // If no avatar saved, generate a new one and save it in sessionStorage
+      const newAvatar = `https://picsum.photos/200?random=${Math.floor(Math.random() * 1000)}`;
+      sessionStorage.setItem('avatar', newAvatar); // Save the avatar in sessionStorage
+      return newAvatar;
+    }
+  };
+
   // Load saved data from localStorage
   useEffect(() => {
     const savedProfile = localStorage.getItem('userProfile');
@@ -30,63 +44,63 @@ const UserProfileManager = ({ user }) => {
   };
 
   return (
-    <div className="bg-[#f5e8c7] rounded-lg p-6 shadow-md max-w-3xl mx-auto">
+    <div className="bg-[#f5e8c7] rounded-lg p-6 m-2 mr-20 shadow-xl max-w-3xl mx-auto transition-all duration-300 hover:scale-105">
       {/* Avatar */}
       <div className="flex items-center justify-center mb-6">
-        <div className="w-28 h-28 bg-pink-300 rounded-full flex items-center justify-center">
+        <div className="w-28 h-28 bg-gradient-to-r from-[#435585] to-[#818fb4] rounded-full flex items-center justify-center shadow-xl transform transition duration-300 hover:scale-110">
           <img
-            src="https://via.placeholder.com/100"
+            src={getRandomAvatar()}
             alt="Avatar"
-            className="w-full h-full rounded-full"
+            className="w-full h-full rounded-full object-cover"
           />
         </div>
       </div>
 
       {/* Conditional Rendering */}
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Username */}
-          <div className="relative">
-            <label className="block text-sm text-gray-600 mb-1">USERNAME</label>
+          <div className="relative group">
+            <label className="block text-sm text-[#435585] mb-1">USERNAME</label>
             <input
               type="text"
               value={user.username}
               disabled
-              className="w-full bg-[#3d3272] text-white rounded-lg p-3 cursor-not-allowed"
+              className="w-full bg-[#435585] text-[#f5f4e6] rounded-lg p-3 cursor-not-allowed transition-all duration-300 ease-in-out group-hover:bg-[#5f6c8e]"
             />
           </div>
 
           {/* Email */}
-          <div className="relative">
-            <label className="block text-sm text-gray-600 mb-1">EMAIL ADDRESS</label>
+          <div className="relative group">
+            <label className="block text-sm text-[#435585] mb-1">EMAIL ADDRESS</label>
             <input
               type="email"
               value={user.email}
               disabled
-              className="w-full bg-[#3d3272] text-white rounded-lg p-3 cursor-not-allowed"
+              className="w-full bg-[#435585] text-[#f5f4e6] rounded-lg p-3 cursor-not-allowed transition-all duration-300 ease-in-out group-hover:bg-[#5f6c8e]"
             />
           </div>
 
           {/* Birthdate */}
-          <div className="relative">
-            <label className="block text-sm text-gray-600 mb-1">BIRTHDATE</label>
+          <div className="relative group">
+            <label className="block text-sm text-[#435585] mb-1">BIRTHDATE</label>
             <input
               type="date"
               name="birthdate"
               value={profileData.birthdate}
               onChange={handleChange}
-              className="w-full bg-[#3d3272] text-white rounded-lg p-3"
+              className="w-full bg-[#818fb4] text-[#f5f4e6] rounded-lg p-3 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 group-hover:bg-[#5f6c8e]"
             />
           </div>
 
           {/* About Me */}
-          <div className="relative">
-            <label className="block text-sm text-gray-600 mb-1">ABOUT ME</label>
+          <div className="relative group">
+            <label className="block text-sm text-[#435585] mb-1">ABOUT ME</label>
             <textarea
               name="about_me"
               value={profileData.about_me}
               onChange={handleChange}
-              className="w-full bg-[#7c89b8] text-white rounded-lg p-3 h-28"
+              className="w-full bg-[#818fb4] text-[#f5f4e6] rounded-lg p-3 h-28 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 group-hover:bg-[#5f6c8e]"
               placeholder="Tell something about yourself..."
             />
           </div>
@@ -94,33 +108,33 @@ const UserProfileManager = ({ user }) => {
           {/* Save Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+            className="w-full bg-[#435585] text-[#f5f4e6] py-2 rounded-lg hover:bg-[#5f6c8e] transition duration-300 ease-in-out"
           >
             Save Changes
           </button>
         </form>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Username */}
-          <div className="bg-[#3d3272] text-white rounded-lg p-3">
+          <div className="bg-[#435585] text-[#f5f4e6] rounded-lg p-3 shadow-xl transition-all duration-300 ease-in-out hover:bg-[#5f6c8e]">
             <p className="font-bold">USERNAME</p>
             <p>{user.username}</p>
           </div>
 
           {/* Email */}
-          <div className="bg-[#3d3272] text-white rounded-lg p-3">
+          <div className="bg-[#435585] text-[#f5f4e6] rounded-lg p-3 shadow-xl transition-all duration-300 ease-in-out hover:bg-[#5f6c8e]">
             <p className="font-bold">EMAIL ADDRESS</p>
             <p>{user.email}</p>
           </div>
 
           {/* Birthdate */}
-          <div className="bg-[#3d3272] text-white rounded-lg p-3">
+          <div className="bg-[#435585] text-[#f5f4e6] rounded-lg p-3 shadow-xl transition-all duration-300 ease-in-out hover:bg-[#5f6c8e]">
             <p className="font-bold">BIRTHDATE</p>
             <p>{profileData.birthdate || 'N/A'}</p>
           </div>
 
           {/* About Me */}
-          <div className="bg-[#7c89b8] text-white rounded-lg p-3 h-28">
+          <div className="bg-[#818fb4] text-[#f5f4e6] rounded-lg p-3 h-28 shadow-xl transition-all duration-300 ease-in-out hover:bg-[#5f6c8e]">
             <p className="font-bold">ABOUT ME</p>
             <p>{profileData.about_me || 'Tell something about yourself...'}</p>
           </div>
@@ -128,7 +142,7 @@ const UserProfileManager = ({ user }) => {
           {/* Edit Button */}
           <button
             onClick={() => setIsEditing(true)}
-            className="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600"
+            className="w-full bg-[#f5f4e6] text-[#435585] py-2 rounded-lg hover:bg-[#e1e1e1] transition duration-300 ease-in-out"
           >
             Edit Profile
           </button>

@@ -36,8 +36,8 @@ const Profile = () => {
         </div>
 
         {/* Content Area */}
-        <div className="p-6 flex justify-center">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl">
+        <div className="p-6 flex justify-center mr-64">
+          <div className="bg-[#fcf2d9] rounded-lg shadow-lg w-full max-w-2xl">
             {/* Pass the user data to UserProfileManager */}
             <UserProfileManager user={user} />
           </div>

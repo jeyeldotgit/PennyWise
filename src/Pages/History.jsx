@@ -62,25 +62,26 @@ function History() {
   };
 
   return (
-    <div className="flex w-100vh h-screen bg-[#f5e8c7]">
+    <div className="flex w-full h-screen bg-[#f5e8c7]">
       <div>
         <Sidebar />
       </div>
 
-      <div className="flex flex-col flex-grow pt-6">
+      <div className="flex flex-col flex-grow pt-6 justify-center items-center">
         <div>
           <DbHeader />
         </div>
 
-        <div className="p-6 mt-12 bg-white border border-gray-300 rounded-lg ml-[200px] mr-[1000px]">
-          <h2 className="font-semibold text-xl mb-4">Transaction History</h2>
+        {/* Centered Box */}
+        <div className="p-6 mt-12 bg-white border border-[#435585] rounded-lg shadow-lg  w-[800px] mb-[200px] mr-72">
+          <h2 className="font-semibold text-2xl mb-4 text-[#435585] text-center">Transaction History</h2>
 
           <div className="mb-4">
-            <h3 className="font-semibold text-lg">Added Transactions</h3>
+            <h3 className="font-semibold text-xl text-[#435585]">Added Transactions</h3>
             <div>
               {transactions.map((tx, index) => (
-                <div key={index} className="mb-2">
-                  <p>
+                <div key={index} className="mb-3 p-4 border-b border-gray-300 rounded-lg hover:bg-[#e0e5f0]">
+                  <p className="text-sm text-[#2C3E50]">
                     <strong>{tx.type === 'income' ? 'Income' : 'Expense'}:</strong>
                     {tx.category} - {tx.currency} {tx.amount}
                   </p>
@@ -90,11 +91,11 @@ function History() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg text-red-500">Deleted Transactions</h3>
+            <h3 className="font-semibold text-xl text-[#e74c3c]">Deleted Transactions</h3>
             <div>
               {removedTransactions.map((tx, index) => (
-                <div key={index} className="mb-2 text-red-500">
-                  <p>
+                <div key={index} className="mb-3 p-4 border-b border-gray-300 rounded-lg hover:bg-[#f5e8c7]">
+                  <p className="text-sm text-[#e74c3c]">
                     <strong>{tx.type === 'income' ? 'Income' : 'Expense'}:</strong>
                     {tx.category} - {tx.currency} {tx.amount} (This entry was removed)
                   </p>
@@ -102,15 +103,17 @@ function History() {
               ))}
             </div>
           </div>
-        </div>
-
-        <div className="p-6 mt-4">
+                  {/* Centered Button */}
+        <div className="p-6 mt-4 flex justify-center">
           <button 
             onClick={handleSendDataToServer} 
-            className="bg-blue-500 text-white py-2 px-4 rounded">
+            className="bg-[#435585] text-white py-2 px-6 rounded-lg shadow-md hover:bg-[#2C3E50] transition duration-300">
             Send Data to Server
           </button>
         </div>
+        </div>
+
+
       </div>
     </div>
   );
